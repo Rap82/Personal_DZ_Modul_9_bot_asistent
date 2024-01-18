@@ -245,8 +245,7 @@ def hendler(comand_output_result, full_list_dicts_contact):
             Команда - \033[32mshow all\033[33m - покаже доступні контакти\033[0m"
 
         else :
-            finded_contact = f'За вказаним іменем \033[32m{name.capitalize()} \
-                \033[33mзнайдено \033[32m{curent_phone}\033[0m'
+            finded_contact = f'За вказаним іменем \033[32m{name.capitalize()}\033[33mзнайдено \033[32m{curent_phone}\033[0m'
             return finded_contact
 
     def new_phone(curent_name, add_new_phone):
@@ -303,7 +302,7 @@ def hendler(comand_output_result, full_list_dicts_contact):
                     else :
                         some_dict[curent_user_input_list[0]] = curent_user_input_list[1]
                         full_list_dicts_contact.update(some_dict)
-                        return f'Новий контакт <{f'\033[32m{curent_user_input_list[0].capitalize()}'} - {f'{curent_user_input_list[1]}\033[33m'}> успішно додано'
+                        return f'Новий контакт успішно додано'
 
                 case 'print_phone' :
                     curent_phone = full_list_dicts_contact.get(filter_user_comand[1].capitalize())
@@ -363,6 +362,6 @@ DOSTUPNI_COMANDY = f'\033[31mНаразі доступні наступні ко
 print('\n\033[33mВас вітає Бот для роботи з вашии контактами. \033[0m :')
 print(f'\033[31mДоступні наступні команди : \033[32m{LIST_COMANDS_BOT}\033[0m')
 
-full_list_dicts_contacts = {'Vassddffff': 123455, 'Der' : 2222222222, 'Cos' : 55555555}
+full_list_dicts_contacts = {}
 
 main() # Виклик основної функції.
