@@ -100,7 +100,7 @@ def input_error(func):
                 case _ :
                     return f'\n\033[33m{result}\033[0m'
         except IndexError:
-            return f'\033[33mTака команда не пітримується наразі {r'¯\_(ツ)_/¯'}. \
+            return f'\033[33mTака команда не пітримується наразі. \
                 \n\033[0m{DOSTUPNI_COMANDY}'
         except KeyError :
             return '''\033[33mВказаного імені немає в вашій телефоній книзі \n\
