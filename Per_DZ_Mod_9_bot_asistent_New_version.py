@@ -1,8 +1,8 @@
 def input_error(func):
-    def inner(data):
-        list_user_input = data.lower().strip().split()
+    def inner(user_input):
+        list_user_input = user_input.lower().strip().split()
         try:
-            result = func(data)
+            result = func(user_input)
             if result in  massages_dict.keys():
                 return result
         except IndexError as massage:
@@ -25,48 +25,49 @@ def input_error(func):
     return inner
 
 
-def bad_comand(data):
+def bad_comand(user_input):
     return f'{YLLOW_TEXT}Tака команда не пітримується наразі\n{DEFALUT_TEXT}{DOSTUPNI_COMANDY}'
 
 @input_error
-def hello_answer(data):
+def hello_answer(user_input):
     return f'{YLLOW_TEXT}{HELLO_ANSWER}{DEFALUT_TEXT}'
 
 @input_error
-def show_all_contacts(data):
+def show_all_contacts(user_input):
     return_contacts_str = f'{GREEN_TEXT}{"Name":<10}  {"Phone":<12}{YLLOW_TEXT}\n\n'
     for name , phone in phone_book.items():
         return_contacts_str += f'{BIRUZA_TEXT}{name.capitalize():<10}  {YLLOW_TEXT}{phone:<12} \n'
     return return_contacts_str
 
 @input_error
-def add_new_contact(data):
-    list_user_input = data.lower().strip().split()
-    some_dict = {}
+def add_new_contact(user_input):
+    list_user_input = user_input.lower().strip().split()
+
     name = list_user_input[1].capitalize()
     phone = int(list_user_input[2])
     phone = list_user_input[2]
     if phone_book.get(name) is None and len(phone) == 10:
-        some_dict[name] = phone
-        phone_book.update(some_dict)
+        phone_book[name] = phone
+            
         return "add_new_contact_ok"
     if len(phone) != 10:
-        return "add_new_contact_phone_false"
+            return "add_new_contact_phone_false"
     raise TypeError("У вас вже є контакт з таким іменем !!!")
 
+
 @input_error
-def print_phone(data):
-    list_user_input = data.lower().strip().split()
+def print_phone(user_input):
+    list_user_input = user_input.lower().strip().split()
     name = list_user_input[1].capitalize()
     phone = phone_book.get(name)
     if phone is not None:
-        finded_contact = f'{YLLOW_TEXT}За вказаним іменем {BIRUZA_TEXT}{name.capitalize()}{YLLOW_TEXT} знайдено{BIRUZA_TEXT} {phone}{DEFALUT_TEXT}'
+        finded_contact = f'{YLLOW_TEXT}За вказаним іменем {BIRUZA_TEXT}{name.capitalize()}{YLLOW_TEXT} знайдено номер{BIRUZA_TEXT} {phone}{DEFALUT_TEXT}'
         return finded_contact
     else :
         raise TypeError("Такого іменні не знайдено у вашій телефоній книзі !!!")
 @input_error
-def new_phone(data):
-    list_user_input = data.lower().strip().split()
+def new_phone(user_input):
+    list_user_input = user_input.lower().strip().split()
     name = list_user_input[1].capitalize()
     phone = int(list_user_input[2])
     phone = list_user_input[2]
@@ -78,9 +79,9 @@ def new_phone(data):
     raise TypeError("Такого іменні не знайдено у вашій телефоній книзі !!!")
 
 @input_error
-def good_bye(data):
+def good_bye(user_input):
     return f"{YLLOW_TEXT}Good bye!{DEFALUT_TEXT}"
-      
+     
 ACTIONS = {
     'hello': hello_answer,
     'show all': show_all_contacts,
@@ -94,14 +95,16 @@ ACTIONS = {
     }
 
 
-def choice_action(data):
-    data = data.lower().strip()
+def choice_action(user_input):
+    user_input_comand = user_input.lower().strip()
+    chek_comand = user_input.lower().strip().split() 
     for command in ACTIONS:
-        if data.startswith(command):
+        if user_input_comand.startswith(command) and (chek_comand[0] in FOR_CHEK_LIST_COMANDS_BOT): 
             return ACTIONS[command]
     return bad_comand
-        
-# phone_book = {'Vassddffff': 123455, 'Der' : 2222222222, 'Cos' : 55555555}
+
+       
+# phone_book = {'Vassddffff': 0977854123, 'Der' : 0507856127, 'Cos' : 0667856452}
 phone_book ={}
 
 YLLOW_TEXT = "\033[33m"
@@ -113,6 +116,7 @@ BIRUZA_TEXT = "\033[36m"
 
 HELLO_ANSWER = "How can I help you?"
 LIST_COMANDS_BOT = ["hello", "add", "change","phone","show all","good bye", "close", "exit"]
+FOR_CHEK_LIST_COMANDS_BOT = ["hello", "add", "change","phone","show","good", "close", "exit"] # Модифікований список команд для додаткової перевірки .
 DOSTUPNI_COMANDY = f"{RED_TEXT}Доступні наступні команди : {GREEN_TEXT}{LIST_COMANDS_BOT}{DEFALUT_TEXT}"
 PISKAZKA_SHOW_ALL = f"\nКоманда - {GREEN_TEXT}show all{YLLOW_TEXT} - покаже доступні контакти{DEFALUT_TEXT}"
 BAD_COMMAND_MESSAGE = f"{YLLOW_TEXT}Tака команда не пітримується наразі\n{DEFALUT_TEXT}{DOSTUPNI_COMANDY}"
